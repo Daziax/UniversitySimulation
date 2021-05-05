@@ -1,0 +1,47 @@
+[
+    {
+        "id":1001,
+        "capacity":3,
+        "name":"最新游戏机",
+        "icon":"Icon/switch",
+        "price":2200,
+        "type":1,
+        "description":"新款游戏机，不好玩不要钱！"
+    },
+  {
+    "id": 1002,
+    "capacity": 3,
+    "name": "书籍",
+    "icon": "Icon/books",
+    "price":50,
+    "type": 1,
+    "description": "开小灶牌书籍，转为你开的小灶。"
+  },
+  {
+    "id": 1003,
+    "capacity": 3,
+    "name": "爆款耳机",
+    "icon": "Icon/earphone",
+    "price":500,
+    "type": 1,
+    "description": "降噪耳机，悄悄地，ta出现在你的身后。悄悄地，ta又离去。"
+  },
+  {
+    "id": 1004,
+    "capacity": 3,
+    "name": "热门时尚服装",
+    "icon": "Icon/clothes",
+    "price":200,
+    "type": 1,
+    "description": "穿上后时尚boy就是你。"
+  },
+  {
+    "id": 1005,
+    "capacity": 3,
+    "name": "最新鸭梨手机",
+    "icon": "Icon/phone",
+    "price":5000,
+    "type": 1,
+    "description": "鸭梨手机，采用最新鸿蒙os，拿起他与您的亲朋好友一起玩游戏，聊天吧。"
+  }
+]
