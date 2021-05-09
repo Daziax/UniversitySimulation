@@ -17,6 +17,7 @@ TagManager:
   - MapCreation
   - SecondMenu
   - BagGrid
+  - Roles
   layers:
   - Default
   - TransparentFX

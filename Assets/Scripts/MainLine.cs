@@ -8,6 +8,7 @@ public class MainLine
     Activity activity;
     PlayerValue playerValue;
     EnvironmentValue env;
+    List<Person> roles;
     bool isReExam,isDated;
     /// <summary>
     /// 今天是否已经被约
@@ -21,7 +22,6 @@ public class MainLine
         }
     }
 
-    // Start is called before the first frame update
     private MainLine()
     {
         Initialization();
@@ -34,6 +34,7 @@ public class MainLine
         activity = new Activity();
         playerValue = PlayerValue.PlayerInstance();
         env = EnvironmentValue.EnvInstance;
+        roles = Relationship.People;
         
     }
     void NewTerm()
@@ -42,6 +43,11 @@ public class MainLine
     }
     public void NewDay()
     {
+        //刚入学
+        if(env.Day==1)
+        {
+
+        }
         //生活费
         if (env.Day % 3 == 0)//30
         {

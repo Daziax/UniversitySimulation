@@ -18,6 +18,7 @@ public class UIController : MonoBehaviour
     UnityEngine.Events.UnityAction action, action2;
 
     GameObject[] secondMenus;
+    GameObject[] roles;//0是roles,1是bagrole
     void Awake()
     {
 
@@ -26,6 +27,32 @@ public class UIController : MonoBehaviour
         AddMapSecondClickEvent();
         Model.ModelInstance().ReadData();
         AddUIBtnClickEvent();
+    }
+    /// <summary>
+    /// 初始化变量
+    /// </summary>
+    void Initialization()
+    {
+        university = GameObject.Find("UniversityScene").transform.Find("Canvas").gameObject;
+        background = university.transform.Find("Background").gameObject;
+        imgBackground = background.GetComponent<Image>();
+        btnMapSecond = university.transform.Find("UIButton").Find("BtnMap").Find("BtnSecond").gameObject;
+        btnActivitySecond = university.transform.Find("UIButton").Find("BtnActivity").Find("BtnSecond").gameObject;
+
+        btnMain = btnActivitySecond.transform.Find("BtnMain").gameObject;
+        btnMain2 = btnActivitySecond.transform.Find("BtnMain2").gameObject;
+        activityFactory = new ActivityFactory();
+        
+        roles = GameObject.FindGameObjectsWithTag("Roles");
+        foreach(GameObject role in roles)
+        {
+            role.SetActive(false);
+        }
+        //初始化格子ui
+        //bagPanel = GameObject.Find("BagPanel");
+        //uiGrids = bagPanel.GetComponentsInChildren<UIGrid>();
+        //uiGrids = GameObject.FindGameObjectsWithTag("BagGrid");
+
     }
     void Start()
     {
@@ -36,6 +63,8 @@ public class UIController : MonoBehaviour
         {
             second.SetActive(false);
         }
+        ShowPerson(Relationship.People[0], 0);
+        
     }
     void Update()
     {
@@ -67,30 +96,7 @@ public class UIController : MonoBehaviour
             Save();
         }
     }
-    /// <summary>
-    /// 初始化变量
-    /// </summary>
-    void Initialization()
-    {
-        university = GameObject.Find("UniversityScene").transform.Find("Canvas").gameObject;
-        background = university.transform.Find("Background").gameObject;
-        imgBackground = background.GetComponent<Image>();
-        btnMapSecond = university.transform.Find("UIButton").Find("BtnMap").Find("BtnSecond").gameObject;
-        btnActivitySecond = university.transform.Find("UIButton").Find("BtnActivity").Find("BtnSecond").gameObject;
 
-        btnMain = btnActivitySecond.transform.Find("BtnMain").gameObject;
-        btnMain2 = btnActivitySecond.transform.Find("BtnMain2").gameObject;
-        activityFactory = new ActivityFactory();
-
-        //初始化格子ui
-        //bagPanel = GameObject.Find("BagPanel");
-        //uiGrids = bagPanel.GetComponentsInChildren<UIGrid>();
-        //uiGrids = GameObject.FindGameObjectsWithTag("BagGrid");
-
-
-
-
-    }
     /// <summary>
     /// “关闭对话”协程
     /// </summary>
@@ -262,6 +268,18 @@ public class UIController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 显示人物
+    /// </summary>
+    /// <param name="person">显示的人物</param>
+    /// <param name="index">0是主界面，1是背包</param>
+    public void ShowPerson(Person person,short index)
+    {
+        Sprite img = Resources.Load<Sprite>(person.ImgPath);
+        //Instantiate(img, roles.transform, true);
+        roles[index].GetComponent<Image>().sprite = img;
+        roles[index].SetActive(true);
+    }
     #region 背包、商店
     // 背包格子数量
     public int gridCount = 16;

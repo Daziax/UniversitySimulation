@@ -1,0 +1,37 @@
+[
+    {
+        "Name": "小明",
+        "FriendValue": 0,
+        "Age": 18,
+        "Sex": true,
+        "ImgPath":"Roles/Ming"
+    },
+    {
+        "Name": "小红",
+        "FriendValue": 0,
+        "Age": 17,
+        "Sex": false,
+        "ImgPath":"Roles/Hong"
+    },
+    {
+        "Name": "韩梅梅",
+        "FriendValue": 0,
+        "Age": 18,
+        "Sex": false,
+        "ImgPath":"Roles/Mei"
+    },
+    {
+        "Name": "李雷",
+        "FriendValue": 0,
+        "Age": 19,
+        "Sex": true,
+        "ImgPath":"Roles/Lei"
+    },
+    {
+        "Name": null,
+        "FriendValue": 0,
+        "Age": 0,
+        "Sex": false,
+        "ImgPath":""
+    }
+]

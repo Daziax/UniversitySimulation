@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 /// <summary>
 /// 好感度类
 /// </summary>
-public static class Relationship
+public class Relationship
 {
     //private static Relationship relationship = new Relationship();
 
@@ -15,7 +16,6 @@ public static class Relationship
             people = value;
         }
     }
-
 
     //private Relationship() { }
     //public int XiaoMing
@@ -59,5 +59,6 @@ public struct Person
     /// </summary>
     public bool Sex { get; set; }
     public bool IsFriend { get; set; }
+    public string ImgPath { get; set; }
 
 }

@@ -48,7 +48,7 @@ public class Model
         envValue.Day = PlayerPrefs.GetInt("Day", 0);
         //SceneManager.LoadSceneAsync(PlayerPrefs.GetString("SavedScene"), LoadSceneMode.Single);//读取存储的场景
 
-        string path = Application.streamingAssetsPath + "/relationship";
+        string path = Application.streamingAssetsPath + "/relationship.json";
 
         if (File.Exists(path))
         {
