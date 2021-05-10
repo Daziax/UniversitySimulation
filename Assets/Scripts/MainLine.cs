@@ -9,7 +9,7 @@ public class MainLine
     PlayerValue playerValue;
     EnvironmentValue env;
     List<Person> roles;
-    bool isReExam,isDated;
+    bool isReExam,isDated,isDead,isLunch,isBreakfast,isDinner,isSlept;
     /// <summary>
     /// 今天是否已经被约
     /// </summary>
@@ -62,7 +62,17 @@ public class MainLine
             }
             //isReExam = activity.Exam() ? false : true;
         }
+       
+
+    }
+    public void EndOfDay()
+    {
         isDated = false;
+        isLunch = false;
+        isBreakfast=false;
+        isDinner = false;
+        isSlept = true;
+        NewDay();
     }
     void ReExam()
     {
@@ -70,4 +80,10 @@ public class MainLine
             return;
         isReExam = activity.Exam();
     }
+    void Eat()
+    {
+        if (isBreakfast)
+            playerValue.Buff = 1.1f;
+
+}
 }

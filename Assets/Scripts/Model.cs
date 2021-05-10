@@ -20,14 +20,15 @@ public class Model
     /// </summary>
     public void SaveData()
     {
-        PlayerPrefs.SetInt("IQ", playerValue.IQ);
-        PlayerPrefs.SetInt("Charm", playerValue.Charm);
+        PlayerPrefs.SetFloat("IQ", playerValue.IQ);
+        PlayerPrefs.SetFloat("Charm", playerValue.Charm);
         PlayerPrefs.SetFloat("Energy", playerValue.Energy);
-        PlayerPrefs.SetInt("EQ", playerValue.EQ);
-        PlayerPrefs.SetInt("Vanity", playerValue.Vanity);
+        PlayerPrefs.SetFloat("EQ", playerValue.EQ);
+        PlayerPrefs.SetFloat("Vanity", playerValue.Vanity);
         PlayerPrefs.SetFloat("Money", playerValue.Money);
         PlayerPrefs.SetInt("Day", envValue.Day);
-        PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);//存储当前场景
+        //PlayerPrefs.SetString("Scene", GameObject.Find("UniversityScene").transform.Find("Canvas").Find("Background").GetComponent<UnityEngine.UI.Image>().sprite)
+        //PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);//存储当前场景
 
         string json = LitJson.JsonMapper.ToJson(Relationship.People);
         StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/relationship");
@@ -39,11 +40,11 @@ public class Model
     /// </summary>
     public void ReadData()
     {
-        playerValue.IQ = PlayerPrefs.GetInt("IQ", 0);
-        playerValue.Charm = PlayerPrefs.GetInt("Charm", 0);
+        playerValue.IQ = PlayerPrefs.GetFloat("IQ", 0);
+        playerValue.Charm = PlayerPrefs.GetFloat("Charm", 0);
         playerValue.Energy = PlayerPrefs.GetFloat("Energy", 0);
-        playerValue.EQ = PlayerPrefs.GetInt("EQ", 0);
-        playerValue.Vanity = PlayerPrefs.GetInt("Vanity", 0);
+        playerValue.EQ = PlayerPrefs.GetFloat("EQ", 0);
+        playerValue.Vanity = PlayerPrefs.GetFloat("Vanity", 0);
         playerValue.Money = PlayerPrefs.GetFloat("Money", 0);
         envValue.Day = PlayerPrefs.GetInt("Day", 0);
         //SceneManager.LoadSceneAsync(PlayerPrefs.GetString("SavedScene"), LoadSceneMode.Single);//读取存储的场景
@@ -66,6 +67,7 @@ public class Model
             Relationship.People.Add(new Person { Name = "韩梅梅", Age = 18, Sex = false });
             Relationship.People.Add(new Person { Name = "李雷", Age = 18, Sex = true });
         }
+        Debug.Log("读档成功");
     }
 }
 

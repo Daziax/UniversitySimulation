@@ -44,7 +44,7 @@ public class UIGrid : MonoBehaviour, IPointerDownHandler
             {
                 float money = float.Parse(item.Price) * Random.Range(0.3f, 0.6f);
                 activity.GetMoney(money);
-                viewBase.ShowTalk($"根据市场行情，您卖了{money}元。");
+                viewBase.StartShowMessage($"根据市场行情，您卖了{money}元。");
             }
             else if (kind == "shop") //买
             {
@@ -52,7 +52,7 @@ public class UIGrid : MonoBehaviour, IPointerDownHandler
                 SaveBag(AddInBag( bagList,item));
                 float money = float.Parse(item.Price);
                 activity.SpendMoney(money);
-                viewBase.ShowTalk($"您花了{money}元购买了{item.Name}。");
+                viewBase.StartShowMessage($"您花了{money}元购买了{item.Name}。");
             }
             
 

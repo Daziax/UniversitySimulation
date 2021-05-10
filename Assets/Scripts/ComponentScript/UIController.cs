@@ -102,20 +102,29 @@ public class UIController : MonoBehaviour
     /// </summary>
     /// <param name="imgTxtBack"></param>
     /// <returns></returns>
-    IEnumerator CloseTalk(GameObject imgTxtBack)
+    IEnumerator CloseMessage(GameObject imgTxtBack)
     {
         yield return new WaitForSeconds(3);
         imgTxtBack.SetActive(false);
 
     }
+    private IEnumerator ShowMessage(string text, GameObject imgTxtBack, GameObject txtMessage, bool isDelay = false)
+    {
+        if (isDelay)
+        {
+            yield return new WaitForSeconds(3);
+        }     
+        imgTxtBack.SetActive(true);
+        txtMessage.GetComponent<Text>().text = text;
+        StartCoroutine(CloseMessage(imgTxtBack));
+    }
     /// <summary>
     /// 开启“关闭对话”的协程
     /// </summary>
     /// <param name="imgTxtBack"></param>
-    public void StartCloseTalk(GameObject imgTxtBack)
+    public void StartShowMessage(string text, GameObject imgTxtBack,GameObject txtMessage, bool isDelay = false)
     {
-        StartCoroutine(CloseTalk(imgTxtBack));
-
+        StartCoroutine(ShowMessage(text, imgTxtBack, txtMessage,isDelay));
     }
     //public UnityAction<string> MapClick;
     /// <summary>

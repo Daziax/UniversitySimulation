@@ -2,8 +2,8 @@
 public class PlayerValue : IChangeValue
 {
     private static PlayerValue player = new PlayerValue();
-    ValueUI valueUI = ValueUI.PlayerValueUIInstance();
-    //UnityEngine.UI.Slider sldEnergy;
+    ValueUI valueUI;
+    public float Buff { get; set; } = 1f;
     /// <summary>
     /// 返回Player实例
     /// </summary>
@@ -14,54 +14,57 @@ public class PlayerValue : IChangeValue
     }
     private PlayerValue()
     {
+        valueUI = ValueUI.PlayerValueUIInstance();
+        Buff = 1f;
         //sldEnergy = GameObject.Find("SldEnergy").GetComponent<UnityEngine.UI.Slider>();
     }
-    int iq;
+    float iq;
     /// <summary>
     /// 智商,max:500
     /// </summary>
-    public int IQ
+    public float IQ
     {
         get => iq;
         set
         {
-            valueUI.txtIQValue.text = value.ToString();
-            iq = value;
+            iq = value * Buff;
+            valueUI.txtIQValue.text = iq .ToString();
         }
 
     }
     
-    int charm;
+    float charm;
     /// <summary>
     /// 魅力值,max
     /// </summary>
 
-    public int Charm
+    public float Charm
     {
         get => charm;
         set
         {
-            charm = value;
+            charm = value * Buff;
             valueUI.txtCharmValue.text = value.ToString();
         }
     }
-    private int eq;
+    private float eq;
     /// <summary>
     /// 情商
     /// </summary>
-    public int EQ
+    public float EQ
     {
         get => eq;
         set
         {
+            eq = value * Buff;
             valueUI.txtEQValue.text = value.ToString();
-            eq = value;
+            
         }
     }
     /// <summary>
     /// 虚荣
     /// </summary>
-    public int Vanity
+    public float Vanity
     {
         get; set;
     }
@@ -75,8 +78,9 @@ public class PlayerValue : IChangeValue
         get { return energy; }
         set
         {
-            valueUI.sldEnergy.value = value;
             energy = value;
+            valueUI.sldEnergy.value = value;
+            
         }
     }
     /// <summary>
@@ -87,7 +91,7 @@ public class PlayerValue : IChangeValue
     public float Money
     {
         get => money;
-        set { valueUI.txtMoneyValue.text = value.ToString(); money = value; }
+        set { money = value; valueUI.txtMoneyValue.text = value.ToString();  }
     }
     public void IncreaseFavorability(string name, float score)
     {
