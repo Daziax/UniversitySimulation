@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
-
+using UnityEngine.Events;
 class Activity
 {
     //GameObject gameObject;
     PlayerValue playerValue = PlayerValue.PlayerInstance();
     EnvironmentValue envValue = EnvironmentValue.EnvInstance;
     ViewBase viewBase;
+    UnityAction<string> PlayVideo;
     /// <summary>
     /// 
     /// </summary>
@@ -18,6 +19,7 @@ class Activity
     //}
     public Activity()
     {
+        PlayVideo = new UnityAction<string>(GameObject.Find("Canvas").transform.Find("Video Player").GetComponent<VideoControl>().Play);//注册Play时间
         //gameObject= GameObject.Find("UniversityScene").transform.Find("Canvas").gameObject;
         viewBase = new ViewBase();
         //viewBase = GameObject.Find("UIManagement").GetComponent<ViewBase>();
@@ -25,6 +27,7 @@ class Activity
 
     public void Study()//学习
     {
+        PlayVideo("Study");
         playerValue.Energy += 2;
         if (IsEnergyEmpty())
         {

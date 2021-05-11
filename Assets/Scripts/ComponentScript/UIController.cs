@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using LitJson;
+using UnityEngine.Events;
 
 public class UIController : MonoBehaviour
 {
@@ -15,8 +16,8 @@ public class UIController : MonoBehaviour
     private GameObject btnMain, btnMain2;
     string btnMainText, btnMain2Text;
     ActivityFactory activityFactory;
-    UnityEngine.Events.UnityAction action, action2;
-
+    UnityAction action, action2;
+    UnityAction<string> PlayVideo;
     GameObject[] secondMenus;
     GameObject[] roles;//0是roles,1是bagrole
     void Awake()
@@ -48,6 +49,9 @@ public class UIController : MonoBehaviour
         {
             role.SetActive(false);
         }
+
+        PlayVideo = new UnityAction<string>(GameObject.Find("Canvas").transform.Find("Video Player").GetComponent<VideoControl>().Play);//注册Play时间
+        
         //初始化格子ui
         //bagPanel = GameObject.Find("BagPanel");
         //uiGrids = bagPanel.GetComponentsInChildren<UIGrid>();
@@ -133,6 +137,7 @@ public class UIController : MonoBehaviour
     public void ClickMapScene()
     {
         var button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        PlayVideo("Place");
         switch (button.name)
         {
             case "BtnPlayGround":
@@ -184,8 +189,10 @@ public class UIController : MonoBehaviour
             btnMain.GetComponent<Button>().onClick.RemoveAllListeners();
             btnMain.GetComponent<Button>().onClick.AddListener(action);
         }
-
         btnActivitySecond.SetActive(false);
+
+        MeetSb();
+
     }
 
     /// <summary>
@@ -275,6 +282,22 @@ public class UIController : MonoBehaviour
         else
             second.SetActive(false);
 
+    }
+
+    public void MeetSb()
+    {
+        if (Random.Range(0, 1f) < 0.8f)
+        {
+            return;
+        }
+
+        int index = Random.Range(1, 3);
+        Person person = Relationship.People[index];
+        ShowPerson(person, 0);
+
+       
+        ViewBase viewbase = new ViewBase();
+        viewbase.StartShowMessage($"好巧，你是{person.Name}吧,");
     }
 
     /// <summary>
@@ -416,6 +439,7 @@ class ActivityFactory
         action2 = null;// btnActivitySecond.SetActive(false);
         switch (backgroundName)
         {
+
             case "体育场":
                 action += activity.Exercise;
                 actname = "锻炼";
