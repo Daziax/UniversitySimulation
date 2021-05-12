@@ -14,7 +14,7 @@ public class ViewBase
     UIController uiController;
     //delegate void ShowMessageHandler(GameObject imgTxtBack);
     //event ShowMessageHandler ShowMessage;
-    Action<string,GameObject,GameObject,bool> ShowMessage;
+    Action<string,GameObject,GameObject,float> ShowMessage;
     public ViewBase() 
     {
         
@@ -28,7 +28,7 @@ public class ViewBase
     /// <param name="text"></param>
     /// <param name="form">形式,0是Message,1是BlackBack</param>
     /// <param name="isDelay"></param>
-    public void StartShowMessage(string text, bool form = false, bool isDelay=false)//显示对话
+    public void StartShowMessage(string text, bool form = false, float isDelay=1)//显示对话
     {
         //Showtalk(text);
         //StartCoroutine(Showtalk(text,isDelay));
@@ -39,10 +39,13 @@ public class ViewBase
             imgTxtBack = canvas.transform.Find("ImgTxtBack").gameObject;
         
         TxtMessage = imgTxtBack.transform.Find("TxtTalk").gameObject;
-        if (canvas.transform.Find("ImgBlackBackground").gameObject.activeSelf
-            || canvas.transform.Find("ImgTxtBack").gameObject.activeSelf)
-            isDelay = true;
-        ShowMessage(text, imgTxtBack, TxtMessage, isDelay);
+        if (canvas.transform.Find("ImgBlackBackground").gameObject.activeSelf ||
+            canvas.transform.Find("ImgTxtBack").gameObject.activeSelf ||
+            canvas.transform.Find("Video Player").gameObject.activeSelf)
+            ShowMessage(text, imgTxtBack, TxtMessage, isDelay);
+        else
+            ShowMessage(text, imgTxtBack, TxtMessage,1);
+
     } 
     //private IEnumerator Showtalk(string text, bool isDelay = false)
     //{

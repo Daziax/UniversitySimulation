@@ -6,6 +6,7 @@ using System.IO;
 using LitJson;
 using UnityEngine.Events;
 
+
 public class UIController : MonoBehaviour
 {
     public Sprite[] Background;
@@ -43,15 +44,15 @@ public class UIController : MonoBehaviour
         btnMain = btnActivitySecond.transform.Find("BtnMain").gameObject;
         btnMain2 = btnActivitySecond.transform.Find("BtnMain2").gameObject;
         activityFactory = new ActivityFactory();
-        
+
         roles = GameObject.FindGameObjectsWithTag("Roles");
-        foreach(GameObject role in roles)
+        foreach (GameObject role in roles)
         {
             role.SetActive(false);
         }
 
         PlayVideo = new UnityAction<string>(GameObject.Find("Canvas").transform.Find("Video Player").GetComponent<VideoControl>().Play);//注册Play时间
-        
+
         //初始化格子ui
         //bagPanel = GameObject.Find("BagPanel");
         //uiGrids = bagPanel.GetComponentsInChildren<UIGrid>();
@@ -112,12 +113,11 @@ public class UIController : MonoBehaviour
         imgTxtBack.SetActive(false);
 
     }
-    private IEnumerator ShowMessage(string text, GameObject imgTxtBack, GameObject txtMessage, bool isDelay = false)
+    private IEnumerator ShowMessage(string text, GameObject imgTxtBack, GameObject txtMessage, float isDelay = 1)
     {
-        if (isDelay)
-        {
-            yield return new WaitForSeconds(3);
-        }     
+
+        yield return new WaitForSeconds(isDelay);
+
         imgTxtBack.SetActive(true);
         txtMessage.GetComponent<Text>().text = text;
         StartCoroutine(CloseMessage(imgTxtBack));
@@ -126,9 +126,9 @@ public class UIController : MonoBehaviour
     /// 开启“关闭对话”的协程
     /// </summary>
     /// <param name="imgTxtBack"></param>
-    public void StartShowMessage(string text, GameObject imgTxtBack,GameObject txtMessage, bool isDelay = false)
+    public void StartShowMessage(string text, GameObject imgTxtBack, GameObject txtMessage, float isDelay = 1)
     {
-        StartCoroutine(ShowMessage(text, imgTxtBack, txtMessage,isDelay));
+        StartCoroutine(ShowMessage(text, imgTxtBack, txtMessage, isDelay));
     }
     //public UnityAction<string> MapClick;
     /// <summary>
@@ -177,6 +177,9 @@ public class UIController : MonoBehaviour
         action2 += UIBtnEvent;
         btnMain.transform.Find("Text").GetComponent<Text>().text = btnMainText;
         btnMain2.transform.Find("Text").GetComponent<Text>().text = btnMain2Text;
+
+        btnMain.SetActive(true);
+        btnMain2.SetActive(true);
         if (imgBackground.sprite.name == "小商店2")
         {
             btnMain.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -186,9 +189,30 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            btnMain.GetComponent<Button>().onClick.RemoveAllListeners();
-            btnMain.GetComponent<Button>().onClick.AddListener(action);
+            if (btnMainText == "")
+            {
+                btnMain.SetActive(false);
+            }
+            else
+            {
+                btnMain.GetComponent<Button>().onClick.RemoveAllListeners();
+                btnMain.GetComponent<Button>().onClick.AddListener(action);
+            }
+            if (btnMain2Text == "")
+            {
+                btnMain2.SetActive(false);
+            }
+            else
+            {
+                btnMain2.GetComponent<Button>().onClick.RemoveAllListeners();
+                btnMain2.GetComponent<Button>().onClick.AddListener(action);
+            }
+
+
         }
+
+
+
         btnActivitySecond.SetActive(false);
 
         MeetSb();
@@ -252,6 +276,10 @@ public class UIController : MonoBehaviour
             //Debug.LogWarning("父："+name);
         }
     }
+
+    /// <summary>
+    /// 常规按钮事件
+    /// </summary>
     public void UIBtnEvent()
     {
         GameObject btn = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
@@ -295,17 +323,17 @@ public class UIController : MonoBehaviour
         Person person = Relationship.People[index];
         ShowPerson(person, 0);
 
-       
+        double clipLength = GameObject.Find("Canvas").transform.GetComponentInChildren<UnityEngine.Video.VideoPlayer>().clip.length;
         ViewBase viewbase = new ViewBase();
-        viewbase.StartShowMessage($"好巧，你是{person.Name}吧,");
+        viewbase.StartShowMessage($"好巧，你是{person.Name}吧,",false,System.Convert.ToSingle(clipLength));
     }
-
+    
     /// <summary>
     /// 显示人物
     /// </summary>
     /// <param name="person">显示的人物</param>
     /// <param name="index">0是主界面，1是背包</param>
-    public void ShowPerson(Person person,short index)
+    public void ShowPerson(Person person, short index)
     {
         Sprite img = Resources.Load<Sprite>(person.ImgPath);
         //Instantiate(img, roles.transform, true);
@@ -434,7 +462,7 @@ class ActivityFactory
     internal void Act(string backgroundName, out string actname, out UnityEngine.Events.UnityAction action, out string actname2, out UnityEngine.Events.UnityAction action2, GameObject btnActivitySecond)
     {
         actname = "";
-        actname2 = null;
+        actname2 = "";
         action = null;
         action2 = null;// btnActivitySecond.SetActive(false);
         switch (backgroundName)

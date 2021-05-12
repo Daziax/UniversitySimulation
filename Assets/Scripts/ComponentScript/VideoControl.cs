@@ -19,7 +19,7 @@ public class VideoControl:MonoBehaviour
     }
     public void Play(string act)
     {
-        videoPlayer.SetActive(true);
+        
         switch(act)
         {
             case "Eat":
@@ -43,6 +43,7 @@ public class VideoControl:MonoBehaviour
 
 
         }
+        videoPlayer.SetActive(true);
         vPlayer.Play();
         StartCoroutine(StopPlay((float)vPlayer.length));
     }

@@ -39,7 +39,7 @@ class Activity
     }
     public void Exercise()//体育锻炼
     {
-
+        PlayVideo("Exercise");
         playerValue.Energy += 2;
         // GameObject.Find("SldEnergy").GetComponent<UnityEngine.UI.Slider>().value += 2;
 
@@ -112,6 +112,7 @@ class Activity
     }
     public void ParttimeJob()//做兼职
     {
+        PlayVideo("ParttimeJob");
         playerValue.Energy -= 2;
         if (IsEnergyEmpty())
         {
@@ -137,6 +138,7 @@ class Activity
     }
     public void Eat()//吃饭
     {
+        PlayVideo("Eat");
         if (playerValue.Money < 10)
         {
             viewBase.StartShowMessage("bia~bia~bia~bia，您的钱不够了，只能吃空气了。");
@@ -153,14 +155,16 @@ class Activity
     }
     public void Sleep()//睡觉
     {
+        PlayVideo("Sleep");
         playerValue.Energy = 0;
         //viewBase.ShowTalk("hu~hu~hu，渐渐的，进入了梦乡。");
-        viewBase.StartShowMessage("hu~hu~hu，渐渐的，进入了梦乡。",true);
+        //viewBase.StartShowMessage("hu~hu~hu，渐渐的，进入了梦乡。",true);
         envValue.Day += 1;
         MainLine.Instance.EndOfDay();
     }
     public void Entertainment()//娱乐
     {
+        PlayVideo("PlayGame");
         playerValue.Energy += 1;
         if (IsEnergyEmpty())
         {
@@ -173,6 +177,7 @@ class Activity
 
     public bool Exam()//考试
     {
+        PlayVideo("Exam");
         float score = Random.Range(0.01f, 1f);
         //TODO:考试动画
         if ((playerValue.IQ > 195 && score > 0.1f)||
