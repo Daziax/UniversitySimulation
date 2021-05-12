@@ -124,15 +124,15 @@ class Activity
     public void SellGoods(Goods good)
     {
         GoodList goodList = GoodList.GoodListInstance();
-        viewBase.StartShowMessage(string.Format("您成功卖出了物品{0},获得了{1}", good.name, good.price / 6));
-        playerValue.Money += good.price / 6;
+        viewBase.StartShowMessage(string.Format("您成功卖出了物品{0},获得了{1}", good.name, good.Price / 6));
+        playerValue.Money += good.Price / 6;
         Debug.LogWarning("此处尚未实现 物品减少");
     }//卖已有商品
     public void BuyGoods(Goods good)
     {
         GoodList goodList = GoodList.GoodListInstance();
-        viewBase.StartShowMessage($"您成功购买了物品{good.name},金币减少{good.price}");
-        playerValue.Money -= good.price;
+        viewBase.StartShowMessage($"您成功购买了物品{good.name},金币减少{good.Price}");
+        playerValue.Money -= good.Price;
         Debug.LogWarning("此处尚未实现 背包增加物品");
     }
     public void Eat()//吃饭

@@ -11,7 +11,7 @@ public class MainLine
     List<Person> roles;
     bool isReExam,isDated,isDead,isLunch,isBreakfast,isDinner,isSlept;
     /// <summary>
-    /// 今天是否已经被约
+    /// 今天是否已经被约 
     /// </summary>
     public bool IsDated
     {

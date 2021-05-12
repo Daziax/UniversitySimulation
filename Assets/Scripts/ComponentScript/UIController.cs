@@ -68,7 +68,7 @@ public class UIController : MonoBehaviour
             second.SetActive(false);
         }
         ShowPerson(Relationship.People[0], 0);
-        
+
     }
     void Update()
     {

@@ -11,10 +11,11 @@
 /[Mm]emoryCaptures/
 /[Ll]ogs/
 /[Pp]ackages/
-/[Aa]ssets/Resources/Animator/
+/[Aa]ssets/Resources/Animator/*.mp4
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
+# !/[Aa]ssets/Resources/Animator/*.meta
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
  /[Aa]ssets/AssetStoreTools*

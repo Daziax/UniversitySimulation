@@ -108,7 +108,7 @@ interface IChangeValue
 
 struct Goods
 {
-    public int price;
+    public int Price { get; set; }
     public string name;
     public string description;
 }
@@ -120,11 +120,11 @@ class GoodList
     {
         return goodList;
     }
-    public Goods gameboy = new Goods() { price = 2200, name = "最新游戏机" };
-    public Goods books = new Goods() { price = 50, name = "书籍" };
-    public Goods earphone = new Goods() { price = 500, name = "爆款耳机" };
-    public Goods clothes = new Goods() { price = 200, name = "热门时尚服装" };
-    public Goods phone = new Goods() { price = 5000, name = "最新鸭梨手机" };
+    public Goods gameboy = new Goods() { Price = 2200, name = "最新游戏机" };
+    public Goods books = new Goods() { Price = 50, name = "书籍" };
+    public Goods earphone = new Goods() { Price = 500, name = "爆款耳机" };
+    public Goods clothes = new Goods() { Price = 200, name = "热门时尚服装" };
+    public Goods phone = new Goods() { Price = 5000, name = "最新鸭梨手机" };
 }
 
 
