@@ -21,6 +21,8 @@ public class UIController : MonoBehaviour
     UnityAction<string> PlayVideo;
     GameObject[] secondMenus;
     GameObject[] roles;//0是roles,1是bagrole
+
+    bool hasGame = false;
     void Awake()
     {
 
@@ -183,9 +185,9 @@ public class UIController : MonoBehaviour
         if (imgBackground.sprite.name == "小商店2")
         {
             btnMain.GetComponent<Button>().onClick.RemoveAllListeners();
-            btnMain.GetComponent<Button>().onClick.AddListener(UIBtnEvent);
+            btnMain.GetComponent<Button>().onClick.AddListener(action);
             btnMain2.GetComponent<Button>().onClick.RemoveAllListeners();
-            btnMain2.GetComponent<Button>().onClick.AddListener(UIBtnEvent);
+            btnMain2.GetComponent<Button>().onClick.AddListener(action2);
         }
         else
         {
@@ -205,10 +207,13 @@ public class UIController : MonoBehaviour
             else
             {
                 btnMain2.GetComponent<Button>().onClick.RemoveAllListeners();
-                btnMain2.GetComponent<Button>().onClick.AddListener(action);
+                btnMain2.GetComponent<Button>().onClick.AddListener(action2);
             }
 
-
+            if (btnMain2Text == "玩游戏" && !hasGame)
+                btnMain2.SetActive(false);
+            else if (btnMain2Text == "玩游戏" && hasGame)
+                btnMain2.SetActive(true);
         }
 
 
@@ -314,18 +319,35 @@ public class UIController : MonoBehaviour
 
     public void MeetSb()
     {
-        if (Random.Range(0, 1f) < 0.8f)
+        if( imgBackground.sprite.name == "大门"||
+            imgBackground.sprite.name == "宿舍"||
+            imgBackground.sprite.name == "操场"||
+            imgBackground.sprite.name == "体育场"||
+            imgBackground.sprite.name == "小商店2")//禁地
+        {
+            return;
+        }
+       
+        if (Random.Range(0, 1f) < 0.8f)//概率
         {
             return;
         }
 
         int index = Random.Range(1, 3);
         Person person = Relationship.People[index];
+        
+        if(imgBackground.sprite.name == "宿舍")
+        {
+            index = 3;
+            person = Relationship.People[index];
+        }
+       
         ShowPerson(person, 0);
 
         double clipLength = GameObject.Find("Canvas").transform.GetComponentInChildren<UnityEngine.Video.VideoPlayer>().clip.length;
+        
         ViewBase viewbase = new ViewBase();
-        viewbase.StartShowMessage($"好巧，你是{person.Name}吧,",false,System.Convert.ToSingle(clipLength));
+        viewbase.StartShowMessage($"好巧啊，你是{person.Name}吧,你也来{imgBackground.sprite.name}了",false,System.Convert.ToSingle(clipLength));
     }
     
     /// <summary>
@@ -363,6 +385,16 @@ public class UIController : MonoBehaviour
 
         BagManager.Instance.RefreshGridsUI();
 
+        foreach(BagData bd in dataList)
+        {
+            if (bd.ID == 1001)
+            { 
+                hasGame = true;
+                break;
+            }
+
+        }
+
     }
     private void AwakeGoodsInit()
     {
@@ -373,6 +405,16 @@ public class UIController : MonoBehaviour
         List<BagData> dataList = Load("bag");
         // 初始化背包管理器
         BagManager.Instance.Init(gridCount, GetItem, dataList);
+
+        foreach (BagData bd in dataList)
+        {
+            if (bd.ID == 1001)
+            {
+                hasGame = true;
+                break;
+            }
+
+        }
 
     }
     private void OnGUI()
@@ -386,6 +428,9 @@ public class UIController : MonoBehaviour
         GUILayout.Label("鼠标右键出售物品", style);
 
     }
+
+
+
 
     /// <summary>
     /// 加载背包或商店存档数据
@@ -479,6 +524,8 @@ class ActivityFactory
             case "宿舍":
                 action += activity.Sleep;
                 actname = "睡觉";
+                action2 += activity.PlayGames;
+                actname2 = "玩游戏";
                 break;
             case "教室":
                 action += activity.Study;
@@ -498,6 +545,12 @@ class ActivityFactory
                 actname = "吃饭";
                 action2 += activity.ParttimeJob;
                 actname2 = "食堂兼职";
+                break;
+            case "大门":
+                action += activity.HangOut;
+                actname = "外出游玩";
+                //action2 += activity.ParttimeJob;
+                //actname2 = "食堂兼职";
                 break;
         }
 

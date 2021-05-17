@@ -9,7 +9,7 @@ public class MainLine
     PlayerValue playerValue;
     EnvironmentValue env;
     List<Person> roles;
-    bool isReExam,isDated,isDead,isLunch,isBreakfast,isDinner,isSlept;
+    bool isReExam, isDated, isDead, isLunch, isBreakfast, isDinner, isSlept;
     /// <summary>
     /// 今天是否已经被约 
     /// </summary>
@@ -35,7 +35,7 @@ public class MainLine
         playerValue = PlayerValue.PlayerInstance();
         env = EnvironmentValue.EnvInstance;
         roles = Relationship.People;
-        
+
     }
     void NewTerm()
     {
@@ -44,7 +44,7 @@ public class MainLine
     public void NewDay()
     {
         //刚入学
-        if(env.Day==1)
+        if (env.Day == 1)
         {
 
         }
@@ -54,25 +54,27 @@ public class MainLine
             activity.GetlivingCosts();
         }
         //考试和补考
-        if(env.Day% 2==0)//105
+        if (env.Day % 2 == 0)//105
         {
-            for(int i=0;i<100;++i)
-            {
-                Debug.LogWarning(activity.Exam());
-            }
-            //isReExam = activity.Exam() ? false : true;
+            //for(int i=0;i<100;++i)
+            //{
+            //    Debug.LogWarning(activity.Exam());
+            //}
+
+            isReExam = activity.Exam() ? false : true;
         }
-       
+
 
     }
     public void EndOfDay()
     {
         isDated = false;
         isLunch = false;
-        isBreakfast=false;
+        isBreakfast = false;
         isDinner = false;
         isSlept = true;
         NewDay();
+
     }
     void ReExam()
     {
@@ -85,5 +87,5 @@ public class MainLine
         if (isBreakfast)
             playerValue.Buff = 1.1f;
 
-}
+    }
 }

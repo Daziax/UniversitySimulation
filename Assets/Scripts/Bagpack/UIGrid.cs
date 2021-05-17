@@ -39,20 +39,31 @@ public class UIGrid : MonoBehaviour, IPointerDownHandler
             ViewBase viewBase = new ViewBase();
             BaseItem item = BagManager.Instance.FindGridByIndex(index).Item;
 
-            BagManager.Instance.SubItemByIndex(index);
+            
             if (kind == "bag") //卖
             {
+                BagManager.Instance.SubItemByIndex(index);
                 float money = float.Parse(item.Price) * Random.Range(0.3f, 0.6f);
                 activity.GetMoney(money);
                 viewBase.StartShowMessage($"根据市场行情，您卖了{money}元。");
             }
             else if (kind == "shop") //买
             {
-                List<BagData> bagList = Load("bag");
-                SaveBag(AddInBag( bagList,item));
+                
                 float money = float.Parse(item.Price);
-                activity.SpendMoney(money);
-                viewBase.StartShowMessage($"您花了{money}元购买了{item.Name}。");
+                if (activity.SpendMoney(money))
+                {
+                    BagManager.Instance.SubItemByIndex(index);
+                    viewBase.StartShowMessage($"您成功花了{money}元购买了{item.Name}。");
+                }
+                else
+                {
+                    viewBase.StartShowMessage($"糟糕，您的钱不够了，无法购买");
+                }
+                
+                List<BagData> bagList = Load("bag");
+                SaveBag(AddInBag(bagList, item));
+
             }
             
 

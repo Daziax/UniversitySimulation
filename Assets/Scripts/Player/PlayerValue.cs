@@ -3,7 +3,7 @@ public class PlayerValue : IChangeValue
 {
     private static PlayerValue player = new PlayerValue();
     ValueUI valueUI;
-    public float Buff { get; set; } = 1f;
+    public float Buff { get; set; } = 0.5f;
     /// <summary>
     /// 返回Player实例
     /// </summary>

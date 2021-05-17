@@ -19,8 +19,8 @@ public class VideoControl:MonoBehaviour
     }
     public void Play(string act)
     {
-        
-        switch(act)
+        vPlayer.clip = null;
+        switch (act)
         {
             case "Eat":
                 vPlayer.clip = Resources.Load<VideoClip>("Animator/Eat");
@@ -40,11 +40,18 @@ public class VideoControl:MonoBehaviour
             case "Place":
                 vPlayer.clip = Resources.Load<VideoClip>("Animator/Place");
                 break;
+            case "Exam":
+                vPlayer.clip = Resources.Load<VideoClip>("Animator/Exam");
+                break;
+            case "PlayGame":
+                vPlayer.clip = Resources.Load<VideoClip>("Animator/PlayGame");
+                break;
 
 
         }
         videoPlayer.SetActive(true);
         vPlayer.Play();
+        
         StartCoroutine(StopPlay((float)vPlayer.length));
     }
     IEnumerator StopPlay(float seconds)

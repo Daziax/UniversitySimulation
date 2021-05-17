@@ -27,27 +27,40 @@ class Activity
 
     public void Study()//学习
     {
-        PlayVideo("Study");
-        playerValue.Energy += 2;
         if (IsEnergyEmpty())
         {
             viewBase.StartShowMessage("您已经没有精力做这件事了");
             return;
         }
+        PlayVideo("Study");
+        playerValue.Energy += 2;
         playerValue.IQ += 1;
         viewBase.StartShowMessage("经过接近于睡着的思维大碰撞后，您的脑力值增加了");
     }
+    public void ReadBooks()//读书
+    {
+        if (IsEnergyEmpty())
+        {
+            viewBase.StartShowMessage("您已经没有精力做这件事了");
+            return;
+        }
+        PlayVideo("ReadBooks");
+        playerValue.Energy += 2;
+        playerValue.IQ += 1;
+        viewBase.StartShowMessage("呼噜噜~呼噜噜~，您在睡梦中习得了此书，您的脑力值增加了");
+    }
     public void Exercise()//体育锻炼
     {
+        if (IsEnergyEmpty())
+        {
+            viewBase.StartShowMessage("您已经没有精力做这件事了");
+            return;
+        }
         PlayVideo("Exercise");
         playerValue.Energy += 2;
         // GameObject.Find("SldEnergy").GetComponent<UnityEngine.UI.Slider>().value += 2;
 
-        if (IsEnergyEmpty())
-        {
-            viewBase.StartShowMessage("您已经没有精力做这件事了");
-            return;
-        }
+       
         playerValue.Charm += 1;
         viewBase.StartShowMessage("在和朋友的激烈运动后，您的魅力值增加了");
     }
@@ -86,9 +99,13 @@ class Activity
     {
         playerValue.IncreaseFavorability("Money", money);
     }
-    public void SpendMoney(float money)
+    public bool SpendMoney(float money)
     {
-        playerValue.ReduceFavorability("Money", money);
+        //playerValue.ReduceFavorability("Money", money);
+        if (playerValue.Money < money)
+            return false;
+        playerValue.Money -= money;
+        return true;
     }
     /// <summary>
     /// 获得生活费
@@ -97,15 +114,16 @@ class Activity
     {
         int randomMoney = Random.Range(0, 300);
         randomMoney = randomMoney - randomMoney % 10;
+        int money = 1500;
         if (Random.Range(0, 2) == 0)
         {
-            GetMoney(2000 + randomMoney);
-            viewBase.StartShowMessage($"您终于撑到了发生活费的时刻。妈妈这个月得到了奖金，多给你了{randomMoney}，恭喜您获得了{2000 + randomMoney}元");
+            GetMoney(money + randomMoney);
+            viewBase.StartShowMessage($"您终于撑到了发生活费的时刻。妈妈这个月得到了奖金，多给你了{randomMoney}，恭喜您获得了{money + randomMoney}元");
         }
         else
         {
-            GetMoney(2000 - randomMoney);
-            viewBase.StartShowMessage($"您终于撑到了发生活费的时刻。爸爸炒股亏了，你这月零花钱少了{randomMoney}，您获得了{2000 - randomMoney}元");
+            GetMoney(money - randomMoney);
+            viewBase.StartShowMessage($"您终于撑到了发生活费的时刻。爸爸炒股亏了，你这月零花钱少了{randomMoney}，您获得了{money - randomMoney}元");
         }
 
 
@@ -162,9 +180,21 @@ class Activity
         envValue.Day += 1;
         MainLine.Instance.EndOfDay();
     }
-    public void Entertainment()//娱乐
+    public void PlayGames()//玩游戏
     {
         PlayVideo("PlayGame");
+        playerValue.Energy += 1;
+        if (IsEnergyEmpty())
+        {
+            viewBase.StartShowMessage("您已经没有精力做这件事了");
+            return;
+        }
+        playerValue.IQ += 1;
+        viewBase.StartShowMessage("您玩的很开心。");
+    }
+    public void HangOut()//娱乐
+    {
+        PlayVideo("HangOut");
         playerValue.Energy += 1;
         if (IsEnergyEmpty())
         {
@@ -177,6 +207,7 @@ class Activity
 
     public bool Exam()//考试
     {
+        playerValue.Energy += 8;
         PlayVideo("Exam");
         float score = Random.Range(0.01f, 1f);
         //TODO:考试动画
@@ -186,7 +217,7 @@ class Activity
             (playerValue.IQ < 65 && score > 0.8f)
             )
         {
-            viewBase.StartShowMessage("采用了先进的AI改卷子，恭喜您通过了本学期的考试！");
+            viewBase.StartShowMessage("采用了先进的AI改卷子，恭喜您通过了考试！");
             return true;
         }
 
@@ -196,7 +227,7 @@ class Activity
         //    return true;
         //else if (playerValue.IQ < 65 && score > 0.8f)
         //    return true;
-        viewBase.StartShowMessage("采用了先进的AI改卷子，糟糕，您这学期挂科了！");
+        viewBase.StartShowMessage("采用了先进的AI改卷子，糟糕，您挂科了！");
         return false;
     }
     public void DatingSb(string whom)
