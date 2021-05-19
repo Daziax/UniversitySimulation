@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TankControl : MonoBehaviour
 {
@@ -60,13 +61,16 @@ public class TankControl : MonoBehaviour
 
     public AudioClip audioAttack,audioMove,audioStop;
     private AudioSource audioTank;
+    private GameObject next;
 
-    
     private void Awake()
     {
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
         audioTank = GetComponent<AudioSource>();
+
+        next = GameObject.Find("Next");
+        next.SetActive(false);
     }
     void Start()
     {
@@ -91,6 +95,8 @@ public class TankControl : MonoBehaviour
     private void FixedUpdate()
     {
         TankMove();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            SceneManager.LoadScene("NewScene");
     }
     private void HorizontalMove()
     {
@@ -208,14 +214,44 @@ public class TankControl : MonoBehaviour
         Invoke("Revive", BornAnimeTimer);
         //}
     }
+    int dieCount = 0;
+    int enemyDieCount = 0;
     private void DieCommand()
     {
+        ++dieCount;
+        if (dieCount==3)
+        {
+            dieCount = 0;
+            GameObject.Find("Heart").SendMessage("Die");
+            return;
+        }
         if (!isDefend && !isDied)
         {
             isDied = true;
             Destroy(Instantiate(explosionPrefab, transform), DeathTimer);
             Invoke("Die", DeathTimer);
         }
+        
+    }
+    private void EnemyDieCommand()
+    {
+        ++enemyDieCount;
+        if(enemyDieCount==3)
+        {
+            next.SetActive(true);
+            Invoke("HideNext", 2f);
+            enemyDieCount = 0;
+            
+            
+        }
+    }
+    /// <summary>
+    /// 下一关
+    /// </summary>
+    private void HideNext()
+    {
+        next.SetActive(false);
+        GameObject.FindWithTag("MapCreation").SendMessage("CreateCommand");
     }
     private void Defend()
     {

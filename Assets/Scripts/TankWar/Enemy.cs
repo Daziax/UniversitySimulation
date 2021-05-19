@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     public GameObject bornPrefab;//重生特效
     private float attackTimer = 0;//攻击计时器
     private float attackTimeVal = 1f;//攻击间隔
-    private int DieCount { get; set; } = 0;//死亡计次
+    //private int DieCount { get; set; } = 0;//死亡计次
     public float AttackTimer
     {
         get => attackTimer;
@@ -183,9 +183,9 @@ public class Enemy : MonoBehaviour
         Destroy(Instantiate(bornPrefab,transform.position, Quaternion.Euler(0, 0, 0)), BornAnimeTimer);
         isDied = false;
 
-        DieCount++;
-        if (DieCount > 1)
-        { GameObject.FindWithTag("MapCreation").SendMessage("CreateCommand"); }
+        //DieCount++;
+        //if (DieCount > 1)
+        //{ GameObject.FindWithTag("MapCreation").SendMessage("CreateCommand"); }
 
     }
     private void DieCommand()
@@ -200,7 +200,7 @@ public class Enemy : MonoBehaviour
 
     private void NewGame()
     {
-        DieCount = 0;
+        //DieCount = 0;
         if (Random.Range(0, 2) == 0)
             transform.position = new Vector2(9.2f, 7.2f);
         else

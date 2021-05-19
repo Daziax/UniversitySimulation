@@ -419,13 +419,13 @@ public class UIController : MonoBehaviour
     }
     private void OnGUI()
     {
-        GUIStyle style = new GUIStyle();
-        style.fontSize = 26;
-        style.normal.textColor = Color.blue;
+        //GUIStyle style = new GUIStyle();
+        //style.fontSize = 26;
+        //style.normal.textColor = Color.blue;
 
-        GUILayout.Label("Q键添加物品", style);
-        GUILayout.Label("鼠标左键点击物品显示详情", style);
-        GUILayout.Label("鼠标右键出售物品", style);
+        //GUILayout.Label("Q键添加物品", style);
+        //GUILayout.Label("鼠标左键点击物品显示详情", style);
+        //GUILayout.Label("鼠标右键出售物品", style);
 
     }
 

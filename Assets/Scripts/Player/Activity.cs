@@ -182,15 +182,20 @@ class Activity
     }
     public void PlayGames()//玩游戏
     {
-        PlayVideo("PlayGame");
-        playerValue.Energy += 1;
+        Model.ModelInstance().SaveData();
+        //PlayVideo("PlayGame");
         if (IsEnergyEmpty())
         {
             viewBase.StartShowMessage("您已经没有精力做这件事了");
             return;
         }
+        playerValue.Energy += 1;
         playerValue.IQ += 1;
-        viewBase.StartShowMessage("您玩的很开心。");
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("TankWar");
+        
+        
+        
+        //viewBase.StartShowMessage("您玩的很开心。");
     }
     public void HangOut()//娱乐
     {
@@ -230,7 +235,20 @@ class Activity
         viewBase.StartShowMessage("采用了先进的AI改卷子，糟糕，您挂科了！");
         return false;
     }
-    public void DatingSb(string whom)
+    public void Ending()
+    {
+        PlayVideo("Ending2");
+        viewBase.StartShowMessage("天下没有不散的宴席，转眼间，大学四年的美丽年代就快到了要结束的时候。\n回首这四年，有过欢乐兴奋、也有痛苦悲伤，付出过汗水泪水，也有收获与成就。\n有人说过，忘记过去就意味着背叛，所以，我们回味过去，为的是未来。\n再见学校，再见教室，再见老师，再见同学，再见我暗恋的女孩。", true);
+       // viewBase.StartShowMessage("再见学校，再见教室，再见老师，再见同学，再见我暗恋的女孩。",true);
+        //foreach(Person person in Relationship.People)
+        //{
+        //    if (person.FriendValue >= 50 && Random.Range(0, 1f) > 0.3)
+        //    {
+        //        PlayVideo("Ending1");
+        //    }
+        //}
+    }
+    public void DatingSb(string whom)//约人
     {
         MainLine.Instance.IsDated = true;
         playerValue.EQ += 1;
@@ -248,7 +266,7 @@ class Activity
             else if(w.IsFriend)
             {
                 if ((w.FriendValue < 10 && Random.Range(0, 1f) > 0.9f)||
-                     ((w.FriendValue >= 10 || w.FriendValue <= 30) && Random.Range(0, 1f) > 0.7f)||
+                     ((w.FriendValue >= 10 ||w.FriendValue <= 30)&& Random.Range(0, 1f) > 0.7f)||
                      (w.FriendValue >= 30 && Random.Range(0, 1f) > 0.05f)
                     )
                     AcceptDating(w);
@@ -258,7 +276,7 @@ class Activity
         }
 
     }
-    private void RefuseDating(Person person)
+    private void RefuseDating(Person person)//拒绝邀请
     {
         viewBase.StartShowMessage($"对不起，{person}拒绝了你的邀请，原因不详...");
     }

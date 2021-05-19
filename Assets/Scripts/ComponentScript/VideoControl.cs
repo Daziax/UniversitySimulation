@@ -46,6 +46,9 @@ public class VideoControl:MonoBehaviour
             case "PlayGame":
                 vPlayer.clip = Resources.Load<VideoClip>("Animator/PlayGame");
                 break;
+            case "Ending2":
+                vPlayer.clip = Resources.Load<VideoClip>("Animator/Ending2");
+                break;
 
 
         }

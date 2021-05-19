@@ -34,6 +34,7 @@ public class Bullet:MonoBehaviour
             case "Enemy":
                 if (!isEnemy)
                 {
+                    GameObject.Find("Player").SendMessage("EnemyDieCommand");
                     gameObject.transform.position = hideBullet;
                     GameObject.Find(collision.name).SendMessage("DieCommand");
                 }

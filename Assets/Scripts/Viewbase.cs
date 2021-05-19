@@ -28,7 +28,7 @@ public class ViewBase
     /// <param name="text"></param>
     /// <param name="form">形式,0是Message,1是BlackBack</param>
     /// <param name="isDelay"></param>
-    public void StartShowMessage(string text, bool form = false, float isDelay=1)//显示对话
+    public void StartShowMessage(string text, bool form = false, float isDelay=5)//显示对话
     {
         //Showtalk(text);
         //StartCoroutine(Showtalk(text,isDelay));

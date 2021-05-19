@@ -49,12 +49,12 @@ public class MainLine
 
         }
         //生活费
-        if (env.Day % 3 == 0)//30
+        if (env.Day == 3)//30
         {
             activity.GetlivingCosts();
         }
         //考试和补考
-        if (env.Day % 2 == 0)//105
+        if (env.Day  == 5)//105
         {
             //for(int i=0;i<100;++i)
             //{
@@ -62,6 +62,11 @@ public class MainLine
             //}
 
             isReExam = activity.Exam() ? false : true;
+        }
+        //结局
+        if(env.Day ==6)
+        {
+            activity.Ending();
         }
 
 

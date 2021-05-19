@@ -16,7 +16,8 @@ public class CreateMap : MonoBehaviour
         whiteWall = (GameObject)Resources.Load("Prefabs/Map/WhiteWall");
         redWall = (GameObject)Resources.Load("Prefabs/Map/RedWall");
 
-        positionList = new List<Vector2>(10) { new Vector2(-1.5f, -6.5f), new Vector2(-0.5f, -6.5f), new Vector2(0.5f, -6.5f), new Vector2(1.5f, -6.5f), new Vector2(-1.5f, -7.5f), new Vector2(-0.5f, -7.5f), new Vector2(0.5f, -7.5f), new Vector2(1.5f, -7.5f), new Vector2(-0.5f, 1.5f), new Vector2(8.5f, 7.5f), new Vector2(-8.5f, 7.5f), new Vector2(-9.5f, 7.5f) };
+        //排除位置
+        positionList = new List<Vector2>(20) { new Vector2(-1.5f, -6.5f), new Vector2(-0.5f, -6.5f), new Vector2(0.5f, -6.5f), new Vector2(1.5f, -6.5f), new Vector2(-1.5f, -7.5f), new Vector2(-0.5f, -7.5f), new Vector2(0.5f, -7.5f), new Vector2(1.5f, -7.5f), new Vector2(-0.5f, 1.5f), new Vector2(8.5f, 7.5f), new Vector2(-8.5f, 7.5f), new Vector2(-9.5f, 7.5f),new Vector2(0.5f,0.5f), new Vector2(0.5f, -0.5f), new Vector2(-0.5f, 0.5f), new Vector2(-0.5f, -0.5f) };
 
         CreateRandomMap();
     }
