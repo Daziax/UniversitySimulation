@@ -235,6 +235,11 @@ class Activity
         viewBase.StartShowMessage("采用了先进的AI改卷子，糟糕，您挂科了！");
         return false;
     }
+    public void Exam2()//方便ActivityFactory调用
+    {
+        MainLine.Instance.IsReExam = Exam() ? false : true;
+        
+    }
     public void Ending()
     {
         PlayVideo("Ending2");

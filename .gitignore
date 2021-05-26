@@ -12,7 +12,7 @@
 /[Ll]ogs/
 /[Pp]ackages/
 /[Aa]ssets/Resources/Animator/*.mp4
-
+/[Aa]ssets/ConsolePro/
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
 # !/[Aa]ssets/Resources/Animator/*.meta

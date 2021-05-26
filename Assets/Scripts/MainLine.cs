@@ -9,7 +9,8 @@ public class MainLine
     PlayerValue playerValue;
     EnvironmentValue env;
     List<Person> roles;
-    bool isReExam, isDated, isDead, isLunch, isBreakfast, isDinner, isSlept;
+    bool isDated, isDead, isLunch, isBreakfast, isDinner, isSlept;
+    public bool IsReExam { get; set; }
     /// <summary>
     /// 今天是否已经被约 
     /// </summary>
@@ -61,7 +62,7 @@ public class MainLine
             //    Debug.LogWarning(activity.Exam());
             //}
 
-            isReExam = activity.Exam() ? false : true;
+            //IsReExam = activity.Exam() ? false : true;
         }
         //结局
         if(env.Day ==6)
@@ -83,9 +84,9 @@ public class MainLine
     }
     void ReExam()
     {
-        if (!isReExam)
+        if (!IsReExam)
             return;
-        isReExam = activity.Exam();
+        IsReExam = activity.Exam();
     }
     void Eat()
     {

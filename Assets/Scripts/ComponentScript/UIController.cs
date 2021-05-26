@@ -553,7 +553,12 @@ class ActivityFactory
                 //actname2 = "食堂兼职";
                 break;
         }
-
+        string day = GameObject.Find("txtDayValue").GetComponent<Text>().text;
+        if (day == "5")
+        {
+            action += activity.Exam2;
+            actname = "考试";
+        }
     }
 
 }
