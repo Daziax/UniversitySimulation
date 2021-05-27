@@ -44,6 +44,7 @@ public class UIGrid : MonoBehaviour, IPointerDownHandler
             {
                 BagManager.Instance.SubItemByIndex(index);
                 float money = float.Parse(item.Price) * Random.Range(0.3f, 0.6f);
+                money=Mathf.Round(money);
                 activity.GetMoney(money);
                 viewBase.StartShowMessage($"根据市场行情，您卖了{money}元。");
             }

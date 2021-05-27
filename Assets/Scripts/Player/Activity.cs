@@ -64,6 +64,21 @@ class Activity
         playerValue.Charm += 1;
         viewBase.StartShowMessage("在和朋友的激烈运动后，您的魅力值增加了");
     }
+    public void PlayBascketball()//体育锻炼
+    {
+        if (IsEnergyEmpty())
+        {
+            viewBase.StartShowMessage("您已经没有精力做这件事了");
+            return;
+        }
+        PlayVideo("Bascketball");
+        playerValue.Energy += 2;
+        // GameObject.Find("SldEnergy").GetComponent<UnityEngine.UI.Slider>().value += 2;
+
+
+        playerValue.Charm += 1;
+        viewBase.StartShowMessage("在和朋友的激烈运动后，您的魅力值增加了");
+    }
     public void Competition()//竞赛
     {
         playerValue.Energy += 2;
@@ -131,7 +146,7 @@ class Activity
     public void ParttimeJob()//做兼职
     {
         PlayVideo("ParttimeJob");
-        playerValue.Energy -= 2;
+        playerValue.Energy += 2;
         if (IsEnergyEmpty())
         {
             viewBase.StartShowMessage("您已经没有精力做这件事了");
@@ -162,14 +177,25 @@ class Activity
             viewBase.StartShowMessage("bia~bia~bia~bia，您的钱不够了，只能吃空气了。");
             return;
         }
-        if (playerValue.Energy<=10&& playerValue.Energy > 8)
-        {
-            playerValue.Buff = 1.1f;
-        }
+        //if (playerValue.Energy<=2&& playerValue.Energy >= 0)
+        //{
+        //    playerValue.Buff = 1.1f;
+        //    playerValue.isBreakfast = true;
+        //}
+        //else if (playerValue.Energy < 6 && playerValue.Energy > 2)
+        //{
+        //    playerValue.Buff = 1.1f;
+        //    playerValue.isLunch = true;
+        //}
+        //else if(playerValue.Energy <=8 && playerValue.Energy >= 6)
+        //{
+        //    playerValue.Buff = 1.1f;
+        //    playerValue.isDinner = true;
+        //}
         //if()
         playerValue.Energy -= 1;
         playerValue.Money -= 10;
-        viewBase.StartShowMessage("bia~bia~bia~bia，真好吃，您的精力提升了。");
+        viewBase.StartShowMessage("bia~bia~bia~bia，真好吃，您的精力和效率提升了。");
     }
     public void Sleep()//睡觉
     {
@@ -182,7 +208,7 @@ class Activity
     }
     public void PlayGames()//玩游戏
     {
-        Model.ModelInstance().SaveData();
+        //Model.ModelInstance().SaveData();
         //PlayVideo("PlayGame");
         if (IsEnergyEmpty())
         {
@@ -191,7 +217,8 @@ class Activity
         }
         playerValue.Energy += 1;
         playerValue.IQ += 1;
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("TankWar");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TankWar", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+        
         
         
         
@@ -243,7 +270,7 @@ class Activity
     public void Ending()
     {
         PlayVideo("Ending2");
-        viewBase.StartShowMessage("天下没有不散的宴席，转眼间，大学四年的美丽年代就快到了要结束的时候。\n回首这四年，有过欢乐兴奋、也有痛苦悲伤，付出过汗水泪水，也有收获与成就。\n有人说过，忘记过去就意味着背叛，所以，我们回味过去，为的是未来。\n再见学校，再见教室，再见老师，再见同学，再见我暗恋的女孩。", true);
+        viewBase.StartShowMessage("天下没有不散的宴席，转眼间，大学四年的美丽年代就快到了要结束的时候。\n回首这四年，有过欢乐兴奋、也有痛苦悲伤，付出过汗水泪水，也有收获与成就。\n有人说过，忘记过去就意味着背叛，所以，我们回味过去，为的是未来。\n再见学校，再见教室，再见老师，再见同学，再见我暗恋的女孩。", true,10);
        // viewBase.StartShowMessage("再见学校，再见教室，再见老师，再见同学，再见我暗恋的女孩。",true);
         //foreach(Person person in Relationship.People)
         //{
@@ -252,12 +279,10 @@ class Activity
         //        PlayVideo("Ending1");
         //    }
         //}
-    }
-    public void DatingSb(string whom)//约人
+    }//毕业典礼
+    public bool DatingSb(string whom)//约人
     {
-        MainLine.Instance.IsDated = true;
-        playerValue.EQ += 1;
-        viewBase.StartShowMessage(string.Format($"您的情商提升了并且和{whom}的亲密度提升了。"));
+       
         //Relationship.RelationshipInstance().IncreaseFavorability(whom, 1);
         Person w;
         for (int i = 0; i < Relationship.People.Count; ++i)
@@ -274,21 +299,31 @@ class Activity
                      ((w.FriendValue >= 10 ||w.FriendValue <= 30)&& Random.Range(0, 1f) > 0.7f)||
                      (w.FriendValue >= 30 && Random.Range(0, 1f) > 0.05f)
                     )
+                {
+                    viewBase.StartShowMessage(string.Format($"您的情商提升了并且和{whom}的亲密度提升了。"));
                     AcceptDating(w);
-                break;
+                    return true;
+                }
+                    
             }
             RefuseDating(w);
         }
-
+        return false;
     }
     private void RefuseDating(Person person)//拒绝邀请
     {
-        viewBase.StartShowMessage($"对不起，{person}拒绝了你的邀请，原因不详...");
+        viewBase.StartShowMessage($"对不起，{person.Name}拒绝了你的邀请，原因不详...");
     }
     public void AcceptDating(Person person)
     {
+        MainLine.Instance.IsDated = true;
+        playerValue.EQ += 1;
+        Debug.Log(person.FriendValue);
+
         ++person.FriendValue;
-        viewBase.StartShowMessage($"{person}接受了你的邀请，");
+        Debug.Log(person.Name+person.FriendValue);
+        Debug.Log(Relationship.People[1].Name + Relationship.People[1].FriendValue);
+        viewBase.StartShowMessage($"{person.Name}接受了你的邀请，");
     }
     bool IsEnergyEmpty()
     {

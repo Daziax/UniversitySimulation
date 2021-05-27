@@ -30,7 +30,7 @@ public class Heart : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         //yield return new WaitForEndOfFrame();
-        SceneManager.LoadScene("NewScene");
+        SceneManager.UnloadSceneAsync("Tankwar");
     }
     
 }

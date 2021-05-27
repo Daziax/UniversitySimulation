@@ -29,9 +29,9 @@ public class Model
         PlayerPrefs.SetInt("Day", envValue.Day);
         //PlayerPrefs.SetString("Scene", GameObject.Find("UniversityScene").transform.Find("Canvas").Find("Background").GetComponent<UnityEngine.UI.Image>().sprite)
         //PlayerPrefs.SetString("SavedScene", SceneManager.GetActiveScene().name);//存储当前场景
-
+        Debug.Log(Relationship.People[1].Name + Relationship.People[1].FriendValue);
         string json = LitJson.JsonMapper.ToJson(Relationship.People);
-        StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/relationship");
+        StreamWriter writer = new StreamWriter(Application.streamingAssetsPath + "/relationship.json");
         writer.Write(json);
         writer.Close();
     }
@@ -45,8 +45,8 @@ public class Model
         playerValue.Energy = PlayerPrefs.GetFloat("Energy", 0);
         playerValue.EQ = PlayerPrefs.GetFloat("EQ", 0);
         playerValue.Vanity = PlayerPrefs.GetFloat("Vanity", 0);
-        playerValue.Money = PlayerPrefs.GetFloat("Money", 0);
-        envValue.Day = PlayerPrefs.GetInt("Day", 0);
+        playerValue.Money = PlayerPrefs.GetFloat("Money", 200);
+        envValue.Day = PlayerPrefs.GetInt("Day", 1);
         //SceneManager.LoadSceneAsync(PlayerPrefs.GetString("SavedScene"), LoadSceneMode.Single);//读取存储的场景
 
         string path = Application.streamingAssetsPath + "/relationship.json";

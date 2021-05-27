@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System.IO;
 using LitJson;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+
 
 
 public class UIController : MonoBehaviour
@@ -25,7 +27,7 @@ public class UIController : MonoBehaviour
     bool hasGame = false;
     void Awake()
     {
-
+       // Debug.Log("Awake");
         Initialization();
         AwakeGoodsInit();
         AddMapSecondClickEvent();
@@ -63,6 +65,14 @@ public class UIController : MonoBehaviour
     }
     void Start()
     {
+        //Initialization();
+        //AwakeGoodsInit();
+        //AddMapSecondClickEvent();
+        //Model.ModelInstance().ReadData();
+        //AddUIBtnClickEvent();
+
+
+        Debug.Log("Start");
 
         //初始化SecondMenu
         secondMenus = GameObject.FindGameObjectsWithTag("SecondMenu");
@@ -109,28 +119,28 @@ public class UIController : MonoBehaviour
     /// </summary>
     /// <param name="imgTxtBack"></param>
     /// <returns></returns>
-    IEnumerator CloseMessage(GameObject imgTxtBack)
+    IEnumerator CloseMessage(GameObject imgTxtBack,float lastTime)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(lastTime);
         imgTxtBack.SetActive(false);
 
     }
-    private IEnumerator ShowMessage(string text, GameObject imgTxtBack, GameObject txtMessage, float isDelay = 1)
+    private IEnumerator ShowMessage(string text, GameObject imgTxtBack, GameObject txtMessage, float lastTime=5,float isDelay = 1)
     {
 
         yield return new WaitForSeconds(isDelay);
 
         imgTxtBack.SetActive(true);
         txtMessage.GetComponent<Text>().text = text;
-        StartCoroutine(CloseMessage(imgTxtBack));
+        StartCoroutine(CloseMessage(imgTxtBack,lastTime));
     }
     /// <summary>
     /// 开启“关闭对话”的协程
     /// </summary>
     /// <param name="imgTxtBack"></param>
-    public void StartShowMessage(string text, GameObject imgTxtBack, GameObject txtMessage, float isDelay = 1)
+    public void StartShowMessage(string text, GameObject imgTxtBack, GameObject txtMessage, float lastTime=5,float isDelay = 1)
     {
-        StartCoroutine(ShowMessage(text, imgTxtBack, txtMessage, isDelay));
+        StartCoroutine(ShowMessage(text, imgTxtBack, txtMessage, lastTime,isDelay));
     }
     //public UnityAction<string> MapClick;
     /// <summary>
@@ -138,6 +148,7 @@ public class UIController : MonoBehaviour
     /// </summary>
     public void ClickMapScene()
     {
+        ShowPerson(Relationship.People[0], 0);
         var button = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         PlayVideo("Place");
         switch (button.name)
@@ -220,7 +231,7 @@ public class UIController : MonoBehaviour
 
         btnActivitySecond.SetActive(false);
 
-        MeetSb();
+        //MeetSb();
 
     }
 
@@ -314,6 +325,44 @@ public class UIController : MonoBehaviour
             second.SetActive(true);
         else
             second.SetActive(false);
+
+    }
+    public void DateSb()
+    {
+        Activity activity = new Activity();
+    
+        ViewBase viewBase = new ViewBase();
+        GameObject btn = EventSystem.current.currentSelectedGameObject;
+        string name = btn.transform.Find("Text").GetComponent<Text>().text;
+       
+
+        if (imgBackground.sprite.name == "大门" ||
+            imgBackground.sprite.name == "宿舍" ||
+            imgBackground.sprite.name == "操场" ||
+            imgBackground.sprite.name == "体育场" ||
+            imgBackground.sprite.name == "小商店2")//禁地
+        {
+            viewBase.StartShowMessage($"很遗憾，{name}拒绝了您的邀请");
+            return;
+        }
+        if (!activity.DatingSb(name))
+            return;
+        
+        int index = name == "小红" ? 1 : 2;
+        Person person = Relationship.People[index];
+
+        if (imgBackground.sprite.name == "宿舍")
+        {
+            index = 3;
+            person = Relationship.People[index];
+        }
+
+        ShowPerson(person, 0);
+
+        //double clipLength = GameObject.Find("Canvas").transform.GetComponentInChildren<UnityEngine.Video.VideoPlayer>().clip.length;
+
+        ViewBase viewbase = new ViewBase();
+        viewbase.StartShowMessage($"hello{person.Name},很开心你来{imgBackground.sprite.name}，我们一起吧", false);
 
     }
 
@@ -510,6 +559,7 @@ class ActivityFactory
         actname2 = "";
         action = null;
         action2 = null;// btnActivitySecond.SetActive(false);
+        string day = GameObject.Find("txtDayValue").GetComponent<Text>().text;
         switch (backgroundName)
         {
 
@@ -530,13 +580,19 @@ class ActivityFactory
             case "教室":
                 action += activity.Study;
                 actname = "学习";
+                
+                if (day == "5")
+                {
+                    action = new UnityAction(activity.Exam2);
+                    actname = "考试";
+                }
                 break;
             case "操场":
-                action += activity.Exercise;
+                action += activity.PlayBascketball;
                 actname = "打球";
                 break;
             case "图书馆里":
-                action += activity.Study;
+                action += activity.ReadBooks;
                 actname = "读书";
 
                 break;
@@ -552,13 +608,17 @@ class ActivityFactory
                 //action2 += activity.ParttimeJob;
                 //actname2 = "食堂兼职";
                 break;
+            case "教学楼":
+                //string day = GameObject.Find("txtDayValue").GetComponent<Text>().text;
+                if (day == "6")
+                {
+                    action = new UnityAction(activity.Ending);
+                    actname = "参加毕业典礼";
+                }
+                break;
         }
-        string day = GameObject.Find("txtDayValue").GetComponent<Text>().text;
-        if (day == "5")
-        {
-            action += activity.Exam2;
-            actname = "考试";
-        }
+        
+
     }
 
 }

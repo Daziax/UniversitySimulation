@@ -14,7 +14,7 @@ public class ViewBase
     UIController uiController;
     //delegate void ShowMessageHandler(GameObject imgTxtBack);
     //event ShowMessageHandler ShowMessage;
-    Action<string,GameObject,GameObject,float> ShowMessage;
+    Action<string,GameObject,GameObject,float,float> ShowMessage;
     public ViewBase() 
     {
         
@@ -28,7 +28,7 @@ public class ViewBase
     /// <param name="text"></param>
     /// <param name="form">形式,0是Message,1是BlackBack</param>
     /// <param name="isDelay"></param>
-    public void StartShowMessage(string text, bool form = false, float isDelay=5)//显示对话
+    public void StartShowMessage(string text, bool form = false, float lastTime=5,float isDelay=1)//显示对话
     {
         //Showtalk(text);
         //StartCoroutine(Showtalk(text,isDelay));
@@ -40,11 +40,12 @@ public class ViewBase
         
         TxtMessage = imgTxtBack.transform.Find("TxtTalk").gameObject;
         if (canvas.transform.Find("ImgBlackBackground").gameObject.activeSelf ||
-            canvas.transform.Find("ImgTxtBack").gameObject.activeSelf ||
-            canvas.transform.Find("Video Player").gameObject.activeSelf)
-            ShowMessage(text, imgTxtBack, TxtMessage, isDelay);
-        else
-            ShowMessage(text, imgTxtBack, TxtMessage,1);
+            canvas.transform.Find("ImgTxtBack").gameObject.activeSelf) //其他对话框正在进行
+            ShowMessage(text, imgTxtBack, TxtMessage, lastTime,lastTime+1);
+        else if(canvas.transform.Find("Video Player").gameObject.activeSelf)//正在播放视频
+            ShowMessage(text, imgTxtBack, TxtMessage, lastTime,(float)canvas.transform.Find("Video Player").GetComponent<UnityEngine.Video.VideoPlayer>().length);
+        else//没有延迟
+            ShowMessage(text, imgTxtBack, TxtMessage,lastTime, isDelay);
 
     } 
     //private IEnumerator Showtalk(string text, bool isDelay = false)

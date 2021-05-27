@@ -57,8 +57,11 @@ public class VideoControl:MonoBehaviour
                 case "Ending2":
                     vPlayer.clip = Resources.Load<VideoClip>("Animator/Ending2");
                     break;
-                case "Backetball":
+                case "Bascketball":
                     vPlayer.clip = Resources.Load<VideoClip>("Animator/Bascketball");
+                    break;
+                case "ReadBooks":
+                    vPlayer.clip = Resources.Load<VideoClip>("Animator/ReadBooks");
                     break;
             }
             videoPlayer.SetActive(true);
@@ -78,18 +81,16 @@ public class VideoControl:MonoBehaviour
 
         Debug.Log("开始播放");
         vPlayer.Play();
-        if(!vPlayer.isPlaying)
-            Debug.Log("vPlayer is not playing");
-        while (!vPlayer.isPlaying)
-        {
-            yield return null;
-        }
-        while(vPlayer.isPlaying)
-        {
-            Debug.Log("vPlayer is playing");
-            yield return 0;
-        }
-        //yield return new WaitForSeconds(seconds);
+        //while (!vPlayer.isPlaying)
+        //{
+        //    yield return null;
+        //}
+        //while(vPlayer.isPlaying)
+        //{
+        //   // Debug.Log("vPlayer is playing");
+        //    yield return 0;
+        //}
+        yield return new WaitForSeconds(seconds);
         Debug.Log("vPlayer is played");
         vPlayer.Stop();
         vPlayer.clip = null;
@@ -111,7 +112,7 @@ public class VideoControl:MonoBehaviour
         }
         while (vPlayer.isPlaying)
         {
-            Debug.Log("last vPlayer is playing");
+            //Debug.Log("last vPlayer is playing");
             yield return 0;
         }
         while (videoPlayer.activeSelf)

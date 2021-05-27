@@ -96,7 +96,8 @@ public class TankControl : MonoBehaviour
     {
         TankMove();
         if (Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene("NewScene");
+            SceneManager.UnloadSceneAsync("Tankwar");
+            //SceneManager.LoadScene("NewScene");
     }
     private void HorizontalMove()
     {

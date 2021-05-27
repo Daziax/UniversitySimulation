@@ -44,7 +44,7 @@ public class PlayerValue : IChangeValue
         set
         {
             charm = value * Buff;
-            valueUI.txtCharmValue.text = value.ToString();
+            valueUI.txtCharmValue.text = charm.ToString();
         }
     }
     private float eq;
@@ -57,7 +57,7 @@ public class PlayerValue : IChangeValue
         set
         {
             eq = value * Buff;
-            valueUI.txtEQValue.text = value.ToString();
+            valueUI.txtEQValue.text = eq.ToString();
             
         }
     }
@@ -69,6 +69,7 @@ public class PlayerValue : IChangeValue
         get; set;
     }
 
+    public bool isBreakfast = false, isLunch = false, isDinner = false;
     private float energy;
     /// <summary>
     /// 精力值,max:10
@@ -80,7 +81,25 @@ public class PlayerValue : IChangeValue
         {
             energy = value;
             valueUI.sldEnergy.value = value;
-            
+            //if(value == 0)
+            //{
+            //    Buff = 0.5f;
+            //    isBreakfast = false;
+            //    isLunch = false;
+            //    isDinner = false;
+            //}
+            //else if (value < 8 && value > 4 && !isLunch)
+            //{
+            //    Buff = 0.5f;
+            //    //isLunch = false;
+            //}
+            //else if (value <= 8 && value >= 6 && !isDinner)
+            //{
+            //    Buff = 0.5f;
+            //    //isDinner = false;
+            //}
+
+
         }
     }
     /// <summary>
